@@ -68,6 +68,8 @@
             var _webViewJSBridge;
 
             (_webViewJSBridge = webViewJSBridge).callHandler.apply(_webViewJSBridge, [method].concat(args));
+          } else if (window.BreakfastJSBridge && window.BreakfastJSBridge[method]) {
+            window.BreakfastJSBridge[method].apply(window.BreakfastJSBridge, args);
           }
         } catch (error) {
           if (reject) {
@@ -77,7 +79,7 @@
       }, 0);
     };
 
-    if (window.EJsBridge || window.JsBridge || webViewJSBridge) {
+    if (window.EJsBridge || window.JsBridge || webViewJSBridge || window.BreakfastJSBridge) {
       doInvokeMethod();
     } else {
       document.addEventListener(INJECTED_EVENT_NAME, doInvokeMethod);
